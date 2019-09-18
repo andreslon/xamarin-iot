@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<MasterDetailPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:views="clr-namespace:XamarinIoTApp.Views" x:Class="XamarinIoTApp.Views.MasterPage">
+
+    <MasterDetailPage.Master>
+        <!--<NavigationPage Title="Menu" Icon="Menu.png">
+            <x:Arguments>
+                <views:MenuPage></views:MenuPage>
+            </x:Arguments>
+        </NavigationPage>-->
+        <views:MenuPage Title="Menu" Icon="Menu"></views:MenuPage>
+    </MasterDetailPage.Master>
+</MasterDetailPage>

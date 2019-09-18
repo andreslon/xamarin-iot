@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<prism:PrismApplication xmlns="http://xamarin.com/schemas/2014/forms"
+                        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                        xmlns:prism="clr-namespace:Prism.DryIoc;assembly=Prism.DryIoc.Forms"
+                        xmlns:converters="clr-namespace:XamarinIoTApp.Converters"
+                        x:Class="XamarinIoTApp.App">
+    <Application.Resources>
+
+         <!--Converters-->
+        <converters:ReverseBoolConverter
+            x:Key="ReverseBoolConverter" />
+
+        <!--App Colors-->
+        <Color x:Key="PrimaryColor">#2d98da</Color>
+        <Color x:Key="SecondaryColor">#4b7bec</Color>
+        <Color x:Key="SuccessColor">#20bf6b</Color>
+        <Color x:Key="WarningColor">#fc5c65</Color>
+        <Color x:Key="DarkColor">#3867d6</Color>
+        <Color x:Key="LinkColor">#2bcbba</Color>
+        <Color x:Key="BorderColor">#a5b1c2</Color>
+        <Color x:Key="AccentColor">#4b6584</Color>
+
+        <Color x:Key="WhiteColor">#FFFFFF</Color>
+         
+
+        <Color x:Key="PageBackgroundColor">#FFFFFF</Color>
+        <Color x:Key="LineColor">#E0E0E0</Color>
+        <Color x:Key="MenuIconColor">#979797</Color>
+        <Color x:Key="HeadingTextColor">#757575</Color>
+        <Color x:Key="NormalTextColor">#3B495B</Color>
+        <Color x:Key="ButtonColor">#7F8D9E</Color>
+        <Color x:Key="TextGray">#9B9B9B</Color>
+        <Style x:Key="LabelPageHeadingStyle"
+               TargetType="Label">
+            <Setter Property="FontSize"
+                    Value="18" />
+            <Setter Property="FontAttributes"
+                    Value="Bold" />
+            <Setter Property="HorizontalOptions"
+                    Value="Center" />
+            <Setter Property="TextColor"
+                    Value="{StaticResource HeadingTextColor}" />
+        </Style>
+        <Style x:Key="LabelPageNormalStyle"
+               TargetType="Label">
+            <Setter Property="FontAttributes"
+                    Value="None" />
+            <Setter Property="TextColor"
+                    Value="{StaticResource NormalTextColor}" />
+        </Style>
+    </Application.Resources>
+</prism:PrismApplication>
