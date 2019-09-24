@@ -68,7 +68,7 @@ namespace XamarinIoTApp.Droid.Services
                 await bluetoothSocket.ConnectAsync();
                 connected = true;
             }
-            catch (Java.IO.IOException)
+            catch (Java.IO.IOException ex)
             {
                 // Close the socket
                 try

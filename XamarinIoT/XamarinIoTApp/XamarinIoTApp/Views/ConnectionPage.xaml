@@ -1,14 +1,73 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
-             prism:ViewModelLocator.AutowireViewModel="True"
-             NavigationPage.HasNavigationBar="false"
-             xmlns:i18n="clr-namespace:XamarinIoTApp.Extensions"
-             x:Class="XamarinIoTApp.Views.ConnectionPage">
-    <StackLayout
-        BackgroundColor="{StaticResource PageBackgroundColor}"
-        Margin="30,0">
-          <Label Text="Connecting"></Label>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms" prism:ViewModelLocator.AutowireViewModel="True" NavigationPage.HasNavigationBar="false" xmlns:i18n="clr-namespace:XamarinIoTApp.Extensions" x:Class="XamarinIoTApp.Views.ConnectionPage">
+    <StackLayout BackgroundColor="{StaticResource PageBackgroundColor}" Margin="30,10">
+
+
+        <Button BackgroundColor="{StaticResource PrimaryColor}" Text="Connect to ODBII" Command="{Binding ConnectCommand}" TextColor="{StaticResource WhiteColor}"></Button>
+
+
+        <Label Text="ObdII Data" FontSize="Title"></Label>
+
+
+        <StackLayout Orientation="Horizontal">
+            <Label Text="EngineLoad:" FontAttributes="Bold" FontSize="Medium"></Label>
+            <Label Text="{Binding EngineLoad}" FontSize="Medium"></Label>
+        </StackLayout>
+
+        <StackLayout Orientation="Horizontal">
+            <Label Text="ShortTermFuelBank:" FontAttributes="Bold" FontSize="Medium"></Label>
+            <Label Text="{Binding ShortTermFuelBank}" FontSize="Medium"></Label>
+        </StackLayout>
+
+        <StackLayout Orientation="Horizontal">
+            <Label Text="LongTermFuelBank:" FontAttributes="Bold" FontSize="Medium"></Label>
+            <Label Text="{Binding LongTermFuelBank}" FontSize="Medium"></Label>
+        </StackLayout>
+
+        <StackLayout Orientation="Horizontal">
+            <Label Text="MassFlowRate:" FontAttributes="Bold" FontSize="Medium"></Label>
+            <Label Text="{Binding MassFlowRate}" FontSize="Medium"></Label>
+        </StackLayout>
+
+        <StackLayout Orientation="Horizontal">
+            <Label Text="ThrottlePosition:" FontAttributes="Bold" FontSize="Medium"></Label>
+            <Label Text="{Binding ThrottlePosition}" FontSize="Medium"></Label>
+        </StackLayout>
+
+        <StackLayout Orientation="Horizontal">
+            <Label Text="Runtime:" FontAttributes="Bold" FontSize="Medium"></Label>
+            <Label Text="{Binding Runtime}" FontSize="Medium"></Label>
+        </StackLayout>
+
+        <StackLayout Orientation="Horizontal">
+            <Label Text="DistanceWithMalfunctionLight:" FontAttributes="Bold" FontSize="Medium"></Label>
+            <Label Text="{Binding DistanceWithMalfunctionLight}" FontSize="Medium"></Label>
+        </StackLayout>
+
+        <StackLayout Orientation="Horizontal">
+            <Label Text="RelativeThrottlePosition:" FontAttributes="Bold" FontSize="Medium"></Label>
+            <Label Text="{Binding RelativeThrottlePosition}" FontSize="Medium"></Label>
+        </StackLayout>
+
+        <StackLayout Orientation="Horizontal">
+            <Label Text="Speed:" FontAttributes="Bold" FontSize="Medium"></Label>
+            <Label Text="{Binding Speed}" FontSize="Medium"></Label>
+        </StackLayout>
+
+        <StackLayout Orientation="Horizontal">
+            <Label Text="RPM:" FontAttributes="Bold" FontSize="Medium"></Label>
+            <Label Text="{Binding RPM}" FontSize="Medium"></Label>
+        </StackLayout>
+
+        <StackLayout Orientation="Horizontal">
+            <Label Text="EngineFuelRate:" FontAttributes="Bold" FontSize="Medium"></Label>
+            <Label Text="{Binding EngineFuelRate}" FontSize="Medium"></Label>
+        </StackLayout>
+
+        <StackLayout Orientation="Horizontal">
+            <Label Text="VIN:" FontAttributes="Bold" FontSize="Medium"></Label>
+            <Label Text="{Binding VIN}" FontSize="Medium"></Label>
+        </StackLayout>
+
     </StackLayout>
 </ContentPage>

@@ -47,7 +47,9 @@ namespace XamarinIoTApp
             containerRegistry.Register<IHttpClientService, HttpClientService>();
             containerRegistry.Register<IResourcesService, ResourcesService>();
             containerRegistry.Register<INetworkService, NetworkService>();
-             
+            containerRegistry.Register<IOBDDevice, OBDDevice>();
+            
+
 
             //Repositories
             containerRegistry.Register<IDriverRepository, DriverRepository>();
