@@ -2,7 +2,8 @@
 using Prism;
 using Prism.Ioc;
 using UIKit;
-
+using XamarinIoTApp.Infrastructure.Interfaces.Services;
+using XamarinIoTApp.iOS.Services;
 
 namespace XamarinIoTApp.iOS
 {
@@ -33,6 +34,7 @@ namespace XamarinIoTApp.iOS
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
             // Register any platform specific implementations
+            containerRegistry.Register<IObdService, ObdService>();
         }
     }
 }

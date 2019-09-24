@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XamarinIoTApp.Core", "Xamar
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XamarinIoTApp.Infrastructure", "XamarinIoTApp.Infrastructure\XamarinIoTApp.Infrastructure.csproj", "{4C63C42C-64C7-49E8-9D6F-2E27437AE58E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{26596B10-9443-4BB7-BA38-F135318E5F3B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Ad-Hoc|Any CPU = Ad-Hoc|Any CPU
@@ -157,5 +159,10 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {53818BF9-BF37-404D-94F3-257B48C60C7D}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{77EDA82D-4BE0-4867-860E-DC5885447813} = {26596B10-9443-4BB7-BA38-F135318E5F3B}
+		{A40AAE19-5A34-40AE-9D01-70B9808A1A68} = {26596B10-9443-4BB7-BA38-F135318E5F3B}
+		{98FB0631-B16B-4BA1-B8CD-00EEF4A41E2D} = {26596B10-9443-4BB7-BA38-F135318E5F3B}
 	EndGlobalSection
 EndGlobal

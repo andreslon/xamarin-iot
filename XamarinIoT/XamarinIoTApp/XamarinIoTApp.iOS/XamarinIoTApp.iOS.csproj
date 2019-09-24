@@ -97,6 +97,7 @@
     <ITunesArtwork Include="iTunesArtwork@2x.png" />
     <ITunesArtwork Include="iTunesArtwork@3x.png" />
     <Compile Include="Renderers\CustomNavigationRenderer.cs" />
+    <Compile Include="Services\ObdService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Assets.xcassets\Contents.json">
@@ -204,9 +205,14 @@
       <Project>{77EDA82D-4BE0-4867-860E-DC5885447813}</Project>
       <Name>XamarinIoTApp</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\XamarinIoTApp.Infrastructure\XamarinIoTApp.Infrastructure.csproj">
+      <Project>{4C63C42C-64C7-49E8-9D6F-2E27437AE58E}</Project>
+      <Name>XamarinIoTApp.Infrastructure</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Renderers\" />
+    <Folder Include="Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>

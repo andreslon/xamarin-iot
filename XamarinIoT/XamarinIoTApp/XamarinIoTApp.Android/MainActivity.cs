@@ -3,6 +3,8 @@ using Android.Content.PM;
 using Android.OS;
 using Prism;
 using Prism.Ioc;
+using XamarinIoTApp.Droid.Services;
+using XamarinIoTApp.Infrastructure.Interfaces.Services;
 
 namespace XamarinIoTApp.Droid
 {
@@ -26,6 +28,7 @@ namespace XamarinIoTApp.Droid
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
             // Register any platform specific implementations
+            containerRegistry.Register<IObdService, ObdService>();
         }
     }
 }
