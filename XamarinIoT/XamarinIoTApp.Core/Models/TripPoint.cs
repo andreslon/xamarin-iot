@@ -1,14 +1,15 @@
 ﻿using System;
+using Prism.Mvvm;
+
 namespace XamarinIoTApp.Core.Models
 {
-    public class TripPoint
+    public class TripPoint: BindableBase
     {
         public string TripId { get; set; }
 
         public double Latitude { get; set; }
 
-        public double Longitude { get; set; }
-
+        public double Longitude { get; set; } 
         /// <summary>
         ///     Gets or sets the speed, in km/h
         /// </summary>
@@ -24,6 +25,8 @@ namespace XamarinIoTApp.Core.Models
         public int Sequence { get; set; }
 
         public double RPM { get; set; }
+
+
 
         public double ShortTermFuelBank { get; set; }
 

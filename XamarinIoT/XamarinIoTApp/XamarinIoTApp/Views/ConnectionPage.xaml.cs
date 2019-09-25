@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 using Xamarin.Forms;
+using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
 
 namespace XamarinIoTApp.Views
 {
@@ -10,7 +11,7 @@ namespace XamarinIoTApp.Views
         public ConnectionPage()
         {
             InitializeComponent();
-            //lblApiUri.Text = Environment.GetEnvironmentVariable("ApiUri");
+            On<Xamarin.Forms.PlatformConfiguration.iOS>().SetUseSafeArea(true);
         }
     }
 }

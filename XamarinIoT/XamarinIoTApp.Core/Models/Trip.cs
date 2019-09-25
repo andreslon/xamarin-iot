@@ -1,21 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using System.Collections.ObjectModel;
 using Newtonsoft.Json;
+using Prism.Mvvm;
+
 namespace XamarinIoTApp.Core.Models
 {
-    public class Trip
+    public class Trip: BindableBase
     {
         public Trip()
-        {
-            Points = new List<TripPoint>();
+        { 
         }
 
         public string Name { get; set; }
 
         public string UserId { get; set; }
 
-        public IList<TripPoint> Points { get; set; }
+        public ObservableCollection<TripPoint> Points { get; set; }
+
 
         public DateTime RecordedTimeStamp { get; set; }
         public DateTime EndTimeStamp { get; set; }

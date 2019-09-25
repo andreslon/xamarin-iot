@@ -4,8 +4,7 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Prism.Commands;
 using Prism.Events;
-using Prism.Navigation;
-using XamarinIoTApp.Core.Events;
+using Prism.Navigation; 
 using XamarinIoTApp.Core.Models;
 using XamarinIoTApp.Infrastructure.Interfaces;
 using XamarinIoTApp.Infrastructure.Interfaces.Repositories;
@@ -17,10 +16,8 @@ namespace XamarinIoTApp.Core.ViewModels
     public class ConnectionPageViewModel : ViewModelBase
     {
         public IDriverRepository DriverRepository { get; set; }
-        public IOBDDevice OBDDevice { get; set; } 
-        public IEventAggregator EventAggregator { get; set; }
-        public ConnectionPageViewModel(
-            IEventAggregator eventAggregator,
+        public IOBDDevice OBDDevice { get; set; }  
+        public ConnectionPageViewModel( 
             INavigationService navigationService,
             IDriverRepository driverRepository,
             IOBDDevice iOBDDevice )
@@ -28,9 +25,10 @@ namespace XamarinIoTApp.Core.ViewModels
         {
             this.DriverRepository = driverRepository; 
             this.OBDDevice = iOBDDevice;
-            Title = "Connection Page";
-            this.EventAggregator = eventAggregator;
+            Title = "Connection Page"; 
             ConnectCommand = new DelegateCommand(Connect);
+            SimulateConnectionCommand = new DelegateCommand(SimulateConnection);
+            ClearCommand = new DelegateCommand(Clear);
 
             CurrentTrip = new Trip
             {
@@ -44,68 +42,129 @@ namespace XamarinIoTApp.Core.ViewModels
             ElapsedTime = "0s";
             Distance = "0.0";
             FuelConsumption = "N/A";
-            EngineLoad = "N/A";
-
-            EventAggregator.GetEvent<ObdEvent>().Subscribe(ProcessEvent);
+            EngineLoad = "N/A"; 
         }
 
-        private void ProcessEvent(Dictionary<string, string> obj)
+        private void Clear()
         {
-             
-        }
-
+            CurrentTrip.Points = new ObservableCollection<TripPoint>();
+        } 
+        public DelegateCommand ClearCommand { get; private set; }
         public DelegateCommand ConnectCommand { get; private set; }
-
+        public DelegateCommand SimulateConnectionCommand { get; private set; }
+        
         public bool isConnectedToObd { get; set; }
         public Trip CurrentTrip { get; private set; }
+         
+        public double fuelConsumptionRate { get; set; }
+        public string FuelConsumptionUnits { get; set; }
+        public string DistanceUnits { get; set; }
+        public string ElapsedTime { get; set; }
+        public string Distance { get; set; }
+        public string FuelConsumption { get; set; }
+        public string EngineLoad { get; set; }
+        public double RPM { get; set; }
+        
 
-        private double fuelConsumptionRate;
-
-        public string FuelConsumptionUnits { get; }
-        public string DistanceUnits { get; }
-        public string ElapsedTime { get; }
-        public string Distance { get; }
-        public string FuelConsumption { get; }
-        public string EngineLoad { get; }
-
+        async private void SimulateConnection()
+        {
+            isConnectedToObd = await OBDDevice.Initialize(true);
+            if (isConnectedToObd)
+            {
+                await StartStreaming();
+            }
+        }
         async private void Connect()
         {
             isConnectedToObd = await OBDDevice.Initialize();
             if (isConnectedToObd)
             {
+               await StartStreaming(); 
+            }
+        }
 
-                while (true)
+       async private Task StartStreaming()
+        {
+            while (true)
+            {
+
+                TripPoint previous = null;
+                double newDistance = 0;
+                if (CurrentTrip.Points.Count > 1)
                 {
-                    var point = new TripPoint
-                    {
-                        TripId = CurrentTrip.Id,
-                        RecordedTimeStamp = DateTime.UtcNow,
-                        //Latitude = userLocation.Latitude,
-                        //Longitude = userLocation.Longitude,
-                        Sequence = CurrentTrip.Points.Count,
-                        Speed = -255,
-                        RPM = -255,
-                        ShortTermFuelBank = -255,
-                        LongTermFuelBank = -255,
-                        ThrottlePosition = -255,
-                        RelativeThrottlePosition = -255,
-                        Runtime = -255,
-                        DistanceWithMalfunctionLight = -255,
-                        EngineLoad = -255,
-                        MassFlowRate = -255,
-                        EngineFuelRate = -255,
-                        VIN = "-255"
-                    };
-                    AddOBDDataToPoint(point);
-                    CurrentTrip.Points.Add(point);
+                    previous = CurrentTrip.Points[CurrentTrip.Points.Count - 1];
+                    //newDistance = DistanceUtils.CalculateDistance(userLocation.Latitude,
+                    //    userLocation.Longitude, previous.Latitude, previous.Longitude);
 
-                    await Task.Delay(1000);
+                    //if (newDistance > 4) // if more than 4 miles then gps is off don't use
+                    //    return;
                 }
 
+                var point = new TripPoint
+                {
+                    TripId = CurrentTrip.Id,
+                    RecordedTimeStamp = DateTime.UtcNow,
+                    //Latitude = userLocation.Latitude,
+                    //Longitude = userLocation.Longitude,
+                    Sequence = CurrentTrip.Points.Count,
+                    Speed = -255,
+                    RPM = -255,
+                    ShortTermFuelBank = -255,
+                    LongTermFuelBank = -255,
+                    ThrottlePosition = -255,
+                    RelativeThrottlePosition = -255,
+                    Runtime = -255,
+                    DistanceWithMalfunctionLight = -255,
+                    EngineLoad = -255,
+                    MassFlowRate = -255,
+                    EngineFuelRate = -255,
+                    VIN = "-255"
+                };
+                AddOBDDataToPoint(point);
 
+                if (point.RPM>0)
+                {
+                    CurrentTrip.Points.Add(point); 
+                    if (CurrentTrip.Points.Count > 1 && previous != null)
+                    {
+                        RPM = point.RPM;
 
+                        CurrentTrip.Distance += newDistance;
+                        Distance = CurrentTrip.TotalDistanceNoUnits;
+
+                        //calculate gas usage
+                        var timeDif1 = point.RecordedTimeStamp - previous.RecordedTimeStamp;
+                        CurrentTrip.FuelUsed += fuelConsumptionRate * 0.00002236413 * timeDif1.TotalSeconds;
+                        if (CurrentTrip.FuelUsed == 0)
+                            FuelConsumption = "N/A";
+                        else
+                            FuelConsumption = (CurrentTrip.FuelUsed * 3.7854).ToString("N2");
+                    }
+                    else
+                    {
+                        CurrentTrip.FuelUsed = 0;
+                        FuelConsumption = "N/A";
+                    }
+
+                    var timeDif = point.RecordedTimeStamp - CurrentTrip.RecordedTimeStamp;
+
+                    //track seconds, minutes, then hours
+                    if (timeDif.TotalMinutes < 1)
+                        ElapsedTime = $"{timeDif.Seconds}s";
+                    else if (timeDif.TotalHours < 1)
+                        ElapsedTime = $"{timeDif.Minutes}m {timeDif.Seconds}s";
+                    else
+                        ElapsedTime = $"{(int)timeDif.TotalHours}h {timeDif.Minutes}m {timeDif.Seconds}s";
+
+                    if (point.EngineLoad != -255)
+                        EngineLoad = $"{(int)point.EngineLoad}%";
+
+                    FuelConsumptionUnits = "Gallons";
+                    DistanceUnits = "Kilometers";
+                } 
+                await Task.Delay(1000);
             }
-        } 
+        }
 
         async void AddOBDDataToPoint(TripPoint point)
         {

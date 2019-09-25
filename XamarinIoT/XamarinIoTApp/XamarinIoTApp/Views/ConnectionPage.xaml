@@ -1,76 +1,95 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms" prism:ViewModelLocator.AutowireViewModel="True" NavigationPage.HasNavigationBar="false" xmlns:i18n="clr-namespace:XamarinIoTApp.Extensions" x:Class="XamarinIoTApp.Views.ConnectionPage">
-    <StackLayout BackgroundColor="{StaticResource PageBackgroundColor}" Margin="30,10">
+<ContentPage xmlns:b="clr-namespace:Prism.Behaviors;assembly=Prism.Forms" xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms" prism:ViewModelLocator.AutowireViewModel="True" NavigationPage.HasNavigationBar="false" xmlns:i18n="clr-namespace:XamarinIoTApp.Extensions" x:Class="XamarinIoTApp.Views.ConnectionPage">
+    <StackLayout BackgroundColor="{StaticResource PageBackgroundColor}">
 
-        
-
-        <Label TextColor="{ StaticResource PrimaryColor}" FontSize="Title" Text="Welcome to XamarinFestLatam"></Label>
-
-        <Button Margin="20,10" BackgroundColor="{StaticResource PrimaryColor}" Text="Connect to ODBII" Command="{Binding ConnectCommand}" TextColor="{StaticResource WhiteColor}"></Button>
+        <Label TextColor="{ StaticResource PrimaryColor}" HorizontalTextAlignment="Center" Text="Welcome to XamarinFestLatam"></Label>
 
 
-        <Label Text="ObdII Data" FontSize="Title"></Label>
+        <Grid HeightRequest="200" Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Button  Grid.Column="0" Margin="5" BackgroundColor="{StaticResource PrimaryColor}" Text="Connect to ODBII" Command="{Binding ConnectCommand}" TextColor="{StaticResource WhiteColor}"></Button>
+            <Button  Grid.Column="1" Margin="5" BackgroundColor="{StaticResource PrimaryColor}" Text="Simulate connection to ODBII" Command="{Binding SimulateConnectionCommand}" TextColor="{StaticResource WhiteColor}"></Button>
+
+        </Grid>
 
 
-        <StackLayout Orientation="Horizontal">
-            <Label Text="EngineLoad:" FontAttributes="Bold" FontSize="Small"></Label>
-            <Label Text="{Binding EngineLoad}" FontSize="Small"></Label>
-        </StackLayout>
+        <Grid HeightRequest="330" Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
 
-        <StackLayout Orientation="Horizontal">
-            <Label Text="ShortTermFuelBank:" FontAttributes="Bold" FontSize="Small"></Label>
-            <Label Text="{Binding ShortTermFuelBank}" FontSize="Small"></Label>
-        </StackLayout>
+            <StackLayout Orientation="Horizontal" Grid.Column="0" Grid.Row="0">
+                <Label Text="Fuel Consumption:" VerticalOptions="Center" TextColor="Black" FontAttributes="Bold" />
+                <Label Text="{Binding FuelConsumption}" VerticalOptions="Center" TextColor="Black" />
+            </StackLayout>
+            <StackLayout Orientation="Horizontal" Grid.Column="1" Grid.Row="0">
+                <Label Text="Elapsed Time:" VerticalOptions="Center" TextColor="Black" FontAttributes="Bold" />
+                <Label Text="{Binding ElapsedTime}" VerticalOptions="Center" TextColor="Black" />
+            </StackLayout>
+            <StackLayout Orientation="Horizontal" Grid.Column="0" Grid.Row="1">
+                <Label Text="Engine Load:" VerticalOptions="Center" TextColor="Black" FontAttributes="Bold" />
+                <Label Text="{Binding EngineLoad}" VerticalOptions="Center" TextColor="Black" />
+            </StackLayout>
+            <StackLayout Orientation="Horizontal" Grid.Column="1" Grid.Row="1">
+                <Label Text="RPM:" VerticalOptions="Center" TextColor="Black" FontAttributes="Bold" />
+                <Label Text="{Binding RPM}" VerticalOptions="Center" TextColor="Black" />
+            </StackLayout>
 
-        <StackLayout Orientation="Horizontal">
-            <Label Text="LongTermFuelBank:" FontAttributes="Bold" FontSize="Small"></Label>
-            <Label Text="{Binding LongTermFuelBank}" FontSize="Small"></Label>
-        </StackLayout>
+        </Grid>
 
-        <StackLayout Orientation="Horizontal">
-            <Label Text="MassFlowRate:" FontAttributes="Bold" FontSize="Small"></Label>
-            <Label Text="{Binding MassFlowRate}" FontSize="Small"></Label>
-        </StackLayout>
 
-        <StackLayout Orientation="Horizontal">
-            <Label Text="ThrottlePosition:" FontAttributes="Bold" FontSize="Small"></Label>
-            <Label Text="{Binding ThrottlePosition}" FontSize="Small"></Label>
-        </StackLayout>
 
-        <StackLayout Orientation="Horizontal">
-            <Label Text="Runtime:" FontAttributes="Bold" FontSize="Small"></Label>
-            <Label Text="{Binding Runtime}" FontSize="Small"></Label>
-        </StackLayout>
 
-        <StackLayout Orientation="Horizontal">
-            <Label Text="DistanceWithMalfunctionLight:" FontAttributes="Bold" FontSize="Small"></Label>
-            <Label Text="{Binding DistanceWithMalfunctionLight}" FontSize="Small"></Label>
-        </StackLayout>
+        <ListView ItemsSource="{Binding CurrentTrip.Points}" HasUnevenRows="True">
+            <ListView.HeaderTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Label Text="ObdII Data"></Label>
+                    </Grid>
+                </DataTemplate>
+            </ListView.HeaderTemplate>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <!-- Main design for our menu items -->
+                        <StackLayout Orientation="Horizontal" VerticalOptions="FillAndExpand" Spacing="5" Margin="5">
 
-        <StackLayout Orientation="Horizontal">
-            <Label Text="RelativeThrottlePosition:" FontAttributes="Bold" FontSize="Small"></Label>
-            <Label Text="{Binding RelativeThrottlePosition}" FontSize="Small"></Label>
-        </StackLayout>
+                            <Label Text="Sequence:" FontSize="10" VerticalOptions="Center" TextColor="Black" FontAttributes="Bold" />
+                            <Label Text="{Binding Sequence}" FontSize="10" VerticalOptions="Center" TextColor="Black" />
 
-        <StackLayout Orientation="Horizontal">
-            <Label Text="Speed:" FontAttributes="Bold" FontSize="Small"></Label>
-            <Label Text="{Binding Speed}" FontSize="Small"></Label>
-        </StackLayout>
+                            <Label Text="RecordedTime:" FontSize="10" VerticalOptions="Center" TextColor="Black" FontAttributes="Bold" />
+                            <Label Text="{Binding RecordedTimeStamp}" FontSize="10" VerticalOptions="Center" TextColor="Black" />
 
-        <StackLayout Orientation="Horizontal">
-            <Label Text="RPM:" FontAttributes="Bold" FontSize="Small"></Label>
-            <Label Text="{Binding RPM}" FontSize="Small"></Label>
-        </StackLayout>
+                            <Label Text="RPM:" VerticalOptions="Center" FontSize="10" TextColor="Black" FontAttributes="Bold" />
+                            <Label Text="{Binding RPM}" VerticalOptions="Center" FontSize="10" TextColor="Black" />
 
-        <StackLayout Orientation="Horizontal">
-            <Label Text="EngineFuelRate:" FontAttributes="Bold" FontSize="Small"></Label>
-            <Label Text="{Binding EngineFuelRate}" FontSize="Small"></Label>
-        </StackLayout>
+                            <Label Text="Speed:" VerticalOptions="Center" FontSize="10" TextColor="Black" FontAttributes="Bold" />
+                            <Label Text="{Binding Speed}" VerticalOptions="Center" FontSize="10" TextColor="Black" />
 
-        <StackLayout Orientation="Horizontal">
-            <Label Text="VIN:" FontAttributes="Bold" FontSize="Small"></Label>
-            <Label Text="{Binding VIN}" FontSize="Small"></Label>
-        </StackLayout>
+                            <Label Text="ThrottlePosition:" VerticalOptions="Center" FontSize="10" TextColor="Black" FontAttributes="Bold" />
+                            <Label Text="{Binding ThrottlePosition}" VerticalOptions="Center" FontSize="10" TextColor="Black" />
+
+                            <Label Text="Runtime:" VerticalOptions="Center" FontSize="10" TextColor="Black" FontAttributes="Bold" />
+                            <Label Text="{Binding Runtime}" VerticalOptions="Center" FontSize="10" TextColor="Black" />
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            <ListView.Behaviors>
+                <b:EventToCommandBehavior EventName="ItemTapped" Command="{Binding NavigateCommand}" />
+            </ListView.Behaviors>
+        </ListView>
+
+
+        <Button Margin="5" BackgroundColor="{StaticResource BorderColor}" Text="Clear" Command="{Binding ClearCommand}" TextColor="{StaticResource WhiteColor}"></Button>
 
     </StackLayout>
 </ContentPage>
