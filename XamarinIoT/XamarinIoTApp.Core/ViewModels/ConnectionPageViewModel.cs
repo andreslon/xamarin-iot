@@ -16,15 +16,18 @@ namespace XamarinIoTApp.Core.ViewModels
     public class ConnectionPageViewModel : ViewModelBase
     {
         public IDriverRepository DriverRepository { get; set; }
-        public IOBDDevice OBDDevice { get; set; }  
+        public IOBDDevice OBDDevice { get; set; }
+        public IEventHubRepository EventHubRepository { get; set; }
         public ConnectionPageViewModel( 
             INavigationService navigationService,
             IDriverRepository driverRepository,
+            IEventHubRepository eventHubRepository,
             IOBDDevice iOBDDevice )
             : base(navigationService)
         {
             this.DriverRepository = driverRepository; 
             this.OBDDevice = iOBDDevice;
+            this.EventHubRepository = eventHubRepository;
             Title = "Connection Page"; 
             ConnectCommand = new DelegateCommand(Connect);
             SimulateConnectionCommand = new DelegateCommand(SimulateConnection);
@@ -64,7 +67,8 @@ namespace XamarinIoTApp.Core.ViewModels
         public string FuelConsumption { get; set; }
         public string EngineLoad { get; set; }
         public double RPM { get; set; }
-        
+        public double Speed { get; set; }
+
 
         async private void SimulateConnection()
         {
@@ -124,11 +128,21 @@ namespace XamarinIoTApp.Core.ViewModels
 
                 if (point.RPM>0)
                 {
-                    CurrentTrip.Points.Add(point); 
+                    CurrentTrip.Points.Add(point);
+                    EventHubRepository.SendToCloudMessagesAsync(new Infrastructure.Models.IoTMessage
+                    {
+                        Speed= point.Speed,
+                        RPM = point.RPM,
+                        TripId = point.TripId,
+                        RecordedTimeStamp = point.RecordedTimeStamp,
+                        FuelConsumption = FuelConsumption,
+                        ElapsedTime = ElapsedTime 
+                    });
+
                     if (CurrentTrip.Points.Count > 1 && previous != null)
                     {
                         RPM = point.RPM;
-
+                        Speed = point.Speed;
                         CurrentTrip.Distance += newDistance;
                         Distance = CurrentTrip.TotalDistanceNoUnits;
 
